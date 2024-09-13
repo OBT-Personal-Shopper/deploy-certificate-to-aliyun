@@ -42,10 +42,12 @@ jobs:
         DOMAINS: ${{ secrets.DOMAINS }}
         Ali_Key: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         Ali_Secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+        CF_Key: ${{ secrets.CF_Key }}
+        CF_Email: ${{ secrets.CF_Email }}
       run: |
         IFS=',' read -r -a domain_array <<< "${DOMAINS}"
         for domain in "${domain_array[@]}"; do
-          ~/.acme.sh/acme.sh --issue --dns dns_ali -d "*.${domain}" \
+          ~/.acme.sh/acme.sh --issue --dns dns_cf -d "*.${domain}" \
           --key-file ~/certs/${domain}/privkey.pem --fullchain-file ~/certs/${domain}/fullchain.pem
         done
 
